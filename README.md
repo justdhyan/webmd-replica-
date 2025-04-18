@@ -3,7 +3,8 @@
 A pixel-perfect replica of the WebMD website, built for the Pixel Plus Hackathon.
 
 ## 🔗 Live Demo  
-[Click here to view the live project](https://webmd-replica.vercel.app/)
+👇  
+https://webmd-replica.vercel.app/
 
 ## 🔧 Features Added
 - 🌙 Dark mode toggle for a better viewing experience.
