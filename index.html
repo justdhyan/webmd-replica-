@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMD - Better information. Better health.</title>
+    <style>
+        :root {
+            /* Light Theme code */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --header-bg: #0a3370;
+            --header-text: #ffffff;
+            --card-bg: #ffffff;
+            --card-border: #e5e5e5;
+            --section-border: #e5e5e5;
+            --dropdown-bg: #ffffff;
+            --dropdown-text: #333333;
+            --dropdown-hover: #f5f5f5;
+            --link-color: #0a3370;
+            --search-bg: #f5f5f5;
+            --search-text: #333333;
+            --button-bg: #0a3370;
+            --button-text: #ffffff;
+            --button-hover: #0c2d5e;
+            --toggle-bg: #dddddd;
+            --toggle-button: #ffffff;
+        }
+
+        /* Dark Theme code*/
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #0c2d5e;
+            --header-text: #ffffff;
+            --card-bg: #1e1e1e;
+            --card-border: #333333;
+            --section-border: #333333;
+            --dropdown-bg: #1e1e1e;
+            --dropdown-text: #e0e0e0;
+            --dropdown-hover: #2c2c2c;
+            --link-color: #4d8ce3;
+            --search-bg: #2c2c2c;
+            --search-text: #e0e0e0;
+            --button-bg: #0c2d5e;
+            --button-text: #ffffff;
+            --button-hover: #0a3370;
+            --toggle-bg: #555555;
+            --toggle-button: #121212;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header and navigation code */
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            height: 56px;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 24px;
+        }
+
+        nav a, nav .dropdown-trigger {
+            padding: 0 12px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav .dropdown-trigger:hover {
+            background-color: var(--button-hover);
+        }
+
+        .dropdown-trigger::after {
+            content: "▼";
+            font-size: 8px;
+            margin-left: 5px;
+        }
+
+        /* Dropdown menu styles code */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 56px;
+            left: 0;
+            background-color: var(--dropdown-bg);
+            color: var(--dropdown-text);
+            min-width: 250px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            border: 1px solid var(--card-border);
+        }
+
+        .dropdown-menu a {
+            color: var(--dropdown-text);
+            padding: 12px 16px;
+            display: block;
+            height: auto;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--dropdown-hover);
+        }
+
+        .dropdown.active .dropdown-menu {
+            display: block;
+        }
+
+        /* Mobile Menu Toggle Code */
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .subscribe-btn {
+            border: 1px solid var(--header-text);
+            border-radius: 4px;
+            padding: 4px 12px;
+            margin-right: 12px;
+            font-size: 14px;
+        }
+
+        .login-link {
+            margin-right: 12px;
+            font-size: 14px;
+        }
+
+        .icon-button {
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .icon-button:hover {
+            background-color: var(--button-hover);
+        }
+
+        /* Toggle Switches Code */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 12px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            margin: 0 8px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--toggle-bg);
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: var(--toggle-button);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--link-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .toggle-icon {
+            font-size: 14px;
+        }
+
+        /* Search Bar  Code*/
+        .search-container {
+            position: absolute;
+            top: 56px;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--dropdown-bg);
+            padding: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            border: 1px solid var(--card-border);
+        }
+
+        .search-container.active {
+            display: block;
+        }
+
+        .search-form {
+            display: flex;
+            width: 100%;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--card-border);
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+            background-color: var(--search-bg);
+            color: var(--search-text);
+        }
+
+        .search-button {
+            padding: 8px 16px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .search-results {
+            margin-top: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-title {
+            font-weight: bold;
+            color: var(--link-color);
+        }
+
+        .search-result-description {
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        main {
+            padding: 24px 0;
+        }
+
+        .section-title {
+            color: var(--link-color);
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .top-stories {
+            margin-bottom: 48px;
+        }
+
+        .featured-article {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 32px;
+        }
+
+        .featured-article-content h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .featured-article-content p {
+            color: var(--text-color);
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .article-card {
+            display: flex;
+            gap: 16px;
+        }
+
+        .article-thumbnail {
+            width: 96px;
+            height: 96px;
+            flex-shrink: 0;
+            background-color: var(--card-bg);
+        }
+
+        .article-title {
+            font-weight: bold;
+        }
+
+        .card-layout .featured-article {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-layout .featured-article-content {
+            padding: 16px;
+        }
+
+        .card-layout .article-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .card-layout .article-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-layout .article-thumbnail {
+            width: 100%;
+            height: 160px;
+        }
+
+        .card-layout .article-content {
+            padding: 16px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .view-all {
+            color: var(--link-color);
+            font-size: 14px;
+        }
+
+        .healthy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .healthy-card {
+            height: 160px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-layout .healthy-card {
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 768px) {
+            .featured-article {
+                flex-direction: row;
+                gap: 24px;
+            }
+
+            .featured-article-image,
+            .featured-article-content {
+                width: 50%;
+            }
+
+            .article-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .healthy-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .card-layout .article-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 56px;
+                left: 0;
+                width: 100%;
+                background-color: var(--header-bg);
+                flex-direction: column;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav a, nav .dropdown-trigger {
+                width: 100%;
+                border-bottom: 1px solid var(--button-hover);
+            }
+
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                background-color: var(--button-hover);
+            }
+
+            .dropdown-menu a {
+                padding-left: 24px;
+                color: var(--header-text);
+                border-bottom: 1px solid var(--header-bg);
+            }
+
+            .dropdown-menu a:hover {
+                background-color: var(--header-bg);
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .subscribe-btn, .login-link {
+                display: none;
+            }
+
+            .search-container {
+                max-width: 100%;
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header code -->
+    <header>
+        <div class="container header-container">
+            <div class="nav-left">
+                <img src="src/webmd_logo.png" alt="">
+                <div class="mobile-menu-toggle">☰</div>
+                <nav>
+                    <div class="dropdown">
+                        <div class="dropdown-trigger">Conditions</div>
+                        <div class="dropdown-menu">
+                            <a href="#">Allergies</a>
+                            <a href="#">Arthritis</a>
+                            <a href="#">Cancer</a>
+                            <a href="#">Diabetes</a>
+                            <a href="#">Heart Disease</a>
+                            <a href="#">Mental Health</a>
+                            <a href="#">View All Conditions</a>
+                        </div>
+                    </div>
+                    <div class="dropdown" >
+                        <div class="dropdown-trigger">Drugs & Supplements</div>
+                        <div class="dropdown-menu">
+                            <a href="#">Drug Basics & Safety</a>
+                            <a href="#">Pill Identifier</a>
+                            <a href="#">Vitamins & Supplements</a>
+                            <a href="#">Herbs & Supplements</a>
+                            <a href="#">Medication Guide</a>
+                            <a href="#">Drug Interaction Checker</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <div class="dropdown-trigger">Well-Being</div>
+                        <div class="dropdown-menu">
+                            <a href="#">Diet & Weight Management</a>
+                            <a href="#">Fitness & Exercise</a>
+                            <a href="#">Healthy Aging</a>
+                            <a href="#">Men's Health</a>
+                            <a href="#">Women's Health</a>
+                            <a href="#">Food & Recipes</a>
+                            <a href="#">Healthy Sleep</a>
+                        </div>
+                    </div>
+                    <a href="/symptom-checker">Symptom Checker</a>
+                    <a href="/find-doctor">Find a Doctor</a>
+                    <div class="dropdown">
+                        <div class="dropdown-trigger">More</div>
+                        <div class="dropdown-menu">
+                            <a href="#">Health News</a>
+                            <a href="#">Blogs</a>
+                            <a href="#">Podcasts</a>
+                            <a href="#">WebMD Magazine</a>
+                            <a href="#">Newsletters</a>
+                            <a href="#">WebMD Mobile</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="nav-right">
+                
+                <a href="#" class="subscribe-btn" >✉ Subscribe</a>
+                <a href="#" class="login-link">Log In</a>
+                <!-- Toggle Switches -->
+                <div class="toggle-container">
+                    <!-- Dark Mode Toggle -->
+                    <label class="toggle-switch" title="Toggle Dark Mode">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-icon">🌙</span>
+                    
+                    <label class="toggle-switch" title="Toggle Card Layout">
+                        <input type="checkbox" id="layout-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-icon">🃏</span>
+                </div>
+
+                <div class="icon-button" id="search-toggle">🔍</div>
+                <div class="search-container" id="search-container">
+                    <form class="search-form" id="search-form">
+                        <input type="text" class="search-input" id="search-input" placeholder="Search WebMD...">
+                        <button type="submit" class="search-button">Search</button>
+                    </form>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" id="main-content">
+
+        <section class="top-stories">
+            <h2 class="section-title">TODAY'S TOP STORIES</h2>
+
+            <div class="featured-article">
+                <div class="featured-article-image">
+                    <img src="src/women_headace.webp" alt="Woman with headache">
+                </div>
+                <div class="featured-article-content">
+                    <h3>Types Of Headaches And Relief Options</h3>
+                    <p>A headache can be unbearable, but treatments like medications, home remedies, and lifestyle changes could provide relief. Learn the best solutions for managing your headaches.</p>
+                </div>
+            </div>
+
+            <div class="article-grid">
+                <div class="article-card">
+                        <img src="src/blood_pressure.webp" width="150" height="100" alt="Blood pressure">
+                    <div class="article-content">
+                        <h4 class="article-title">High Blood Pressure: Is Surgery the Answer?</h4>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                        <img src="src/symptoms.webp" width="150" height="100" alt="Parkinson's symptoms">
+                    <div class="article-content">
+                        <h4 class="article-title">How to Identify Symptoms of Parkinson's Disease</h4>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                        <img src="src/weight_loss.webp" width="150" height="100" alt="Weight loss">
+                    <div class="article-content">
+                        <h4 class="article-title">Things You Can Do at Night to Lose Weight</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="living-healthy">
+            <div class="section-header">
+                <h2 class="section-title">LIVING HEALTHY</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+
+            <div class="healthy-grid">
+                    <img src="src/living_healthy1.png" width="232" height="317" alt="Healthy living 1">
+                    <img src="src/living_healthy2.png" width="232" height="317" alt="Healthy living 2">
+                    <img src="src/living_healthy3.png" width="232" height="317" alt="Healthy living 3">
+                    <img src="src/living_healthy4.png" width="232" height="317" alt="Healthy living 4">
+                    <img src="src/living_healthy5.png" width="232" height="317" alt="Healthy living 5">
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const nav = document.querySelector('nav');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const layoutToggle = document.getElementById('layout-toggle');
+            const searchToggle = document.getElementById('search-toggle');
+            const searchContainer = document.getElementById('search-container');
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const mainContent = document.getElementById('main-content');
+            const htmlElement = document.documentElement;
+            const isMobile = window.innerWidth <= 768;
+
+            // Search data
+            const searchData = [
+                {
+                    title: "Types Of Headaches And Relief Options",
+                    description: "Learn about different types of headaches and how to treat them effectively."
+                },
+                {
+                    title: "High Blood Pressure: Is Surgery the Answer?",
+                    description: "Explore surgical options for treating high blood pressure when medication isn't enough."
+                },
+                {
+                    title: "How to Identify Symptoms of Parkinson's Disease",
+                    description: "Early warning signs and symptoms of Parkinson's disease that you should know about."
+                },
+                {
+                    title: "Things You Can Do at Night to Lose Weight",
+                    description: "Simple evening habits that can help boost your weight loss efforts while you sleep."
+                },
+                {
+                    title: "Diabetes Management Tips",
+                    description: "Practical advice for managing diabetes and maintaining healthy blood sugar levels."
+                },
+                {
+                    title: "COVID-19 Long-Term Effects",
+                    description: "Understanding the potential long-term health impacts of COVID-19 infection."
+                },
+                {
+                    title: "Heart-Healthy Diet Plans",
+                    description: "Meal plans and dietary guidelines to improve cardiovascular health."
+                }
+            ];
+
+            function closeAllDropdowns() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+
+            dropdowns.forEach(dropdown => {
+                const trigger = dropdown.querySelector('.dropdown-trigger');
+                
+                if (isMobile) {
+                    trigger.addEventListener('click', function(e) {
+                        e.stopPropagation();
+
+                        dropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+
+                        dropdown.classList.toggle('active');
+                    });
+                } else {
+                    dropdown.addEventListener('mouseenter', function() {
+                        closeAllDropdowns();
+                        dropdown.classList.add('active');
+                    });
+                    
+                    dropdown.addEventListener('mouseleave', function() {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+
+            mobileMenuToggle.addEventListener('click', function() {
+                nav.classList.toggle('active');
+                closeAllDropdowns();
+                searchContainer.classList.remove('active');
+            });
+
+            // Dark Mode Toggle Code
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', savedTheme);
+            darkModeToggle.checked = savedTheme === 'dark';
+
+            darkModeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    htmlElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    htmlElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // Code to Layout Toggle
+
+            const savedLayout = localStorage.getItem('layout') || 'standard';
+            mainContent.classList.toggle('card-layout', savedLayout === 'card');
+            layoutToggle.checked = savedLayout === 'card';
+
+            layoutToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    mainContent.classList.add('card-layout');
+                    localStorage.setItem('layout', 'card');
+                } else {
+                    mainContent.classList.remove('card-layout');
+                    localStorage.setItem('layout', 'standard');
+                }
+            });
+
+            searchToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                searchContainer.classList.toggle('active');
+                if (searchContainer.classList.contains('active')) {
+                    searchInput.focus();
+                    nav.classList.remove('active');
+                }
+            });
+
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = searchInput.value.toLowerCase().trim();
+                
+                if (query.length < 2) {
+                    searchResults.innerHTML = '<div class="search-result-item">Please enter at least 2 characters to search</div>';
+                    return;
+                }
+                
+                // Filter results based on query
+                const results = searchData.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.description.toLowerCase().includes(query)
+                );
+
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+                } else {
+                    searchResults.innerHTML = results.map(result => `
+                        <div class="search-result-item">
+                            <div class="search-result-title">${result.title}</div>
+                            <div class="search-result-description">${result.description}</div>
+                        </div>
+                    `).join('');
+                }
+            });
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                
+                if (query.length < 2) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                const results = searchData.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.description.toLowerCase().includes(query)
+                );
+                
+                // Display the results
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+                } else {
+                    searchResults.innerHTML = results.map(result => `
+                        <div class="search-result-item">
+                            <div class="search-result-title">${result.title}</div>
+                            <div class="search-result-description">${result.description}</div>
+                        </div>
+                    `).join('');
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#search-container') && !e.target.closest('#search-toggle')) {
+                    searchContainer.classList.remove('active');
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (isMobile && !e.target.closest('.nav-left') && nav.classList.contains('active')) {
+                    nav.classList.remove('active');
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                const newIsMobile = window.innerWidth <= 768;
+ 
+                if (newIsMobile !== isMobile) {
+                    location.reload();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
